@@ -5,8 +5,8 @@ namespace Spatie\MediaLibrary\Models;
 use DateTimeInterface;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\Support\Responsable;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Jenssegers\Mongodb\Eloquent\Model;
+use Jenssegers\Mongodb\Eloquent\HybridRelations;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\HtmlString;
@@ -25,7 +25,8 @@ use Spatie\MediaLibrary\UrlGenerator\UrlGeneratorFactory;
 class Media extends Model implements Responsable, Htmlable
 {
     use IsSorted,
-        CustomMediaProperties;
+        CustomMediaProperties,
+        HybridRelations;
 
     const TYPE_OTHER = 'other';
 
@@ -37,7 +38,7 @@ class Media extends Model implements Responsable, Htmlable
         'responsive_images' => 'array',
     ];
 
-    public function model(): MorphTo
+    public function model()
     {
         return $this->morphTo();
     }
